@@ -1,0 +1,63 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Cad data</title>
+    <!-- plugins:css -->
+     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css'%}">
+    <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css'%}">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="{% static 'vendors/jvectormap/jquery-jvectormap.css'%}">
+    <link rel="stylesheet" href="{% static 'vendors/flag-icon-css/css/flag-icon.min.css'%}">
+    <link rel="stylesheet" href="{% static 'vendors/owl-carousel-2/owl.carousel.min.css'%}">
+    <link rel="stylesheet" href="{% static 'vendors/owl-carousel-2/owl.theme.default.min.css'%}">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="{% static 'images/favicon.png'%}" />
+  </head>
+  <body>
+
+{% block content%}
+
+{% endblock content%}
+
+
+<!-- plugins:js -->
+ <script src="{% static 'vendors/js/vendor.bundle.base.js'%}"></script>
+ <!-- endinject -->
+ <!-- Plugin js for this page -->
+ <script src="{% static 'vendors/chart.js/Chart.min.js'%}"></script>
+ <script src="{% static 'vendors/progressbar.js/progressbar.min.js'%}"></script>
+ <script src="{% static 'vendors/jvectormap/jquery-jvectormap.min.js'%}"></script>
+ <script src="{% static 'vendors/jvectormap/jquery-jvectormap-world-mill-en.js'%}"></script>
+ <script src="{% static 'vendors/owl-carousel-2/owl.carousel.min.js'%}"></script>
+ <!-- End plugin js for this page -->
+ <!-- inject:js -->
+ <script src="{% static 'js/off-canvas.js'%}"></script>
+ <script src="{% static 'js/hoverable-collapse.js'%}"></script>
+ <script src="{% static 'js/misc.js'%}"></script>
+ <script src="{% static 'js/settings.js'%}"></script>
+ <script src="{% static 'js/todolist.js'%}"></script>
+ <script src="https://cdn.datatables.net/2.1.7/js/dataTables.min.js"></script>
+ <script src="https://cdn.datatables.net/2.1.7/js/dataTables.bootstrap4.min.js"></script>
+ <!-- endinject -->
+ <!-- Custom js for this page -->
+ <script src="{% static 'js/dashboard.js'%}"></script>
+ <!-- End custom js for this page -->
+  <script>
+    // new DataTable('#example');
+    new DataTable('#example', {
+    ordering: false
+  });
+  </script>
+</body>
+</html>
