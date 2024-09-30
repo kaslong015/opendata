@@ -106,7 +106,7 @@
               <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Valid Licenses</h4>
+                    <h4 class="card-title">pending Measure</h4>
                     <div class="table-responsive">
                       <table class="table display" id="example" class="" style="width:100%">
                         <thead>
@@ -120,11 +120,10 @@
                             </th> -->
                             <th> Code</th>
                             <th> Type</th>
-                            <th> Status </th>  
-                            <th> Name</th>  
-                            <th> Expiry date</th> 
-                            <th> Holder </th>  
-                            <th> Core Id</th> 
+                            <th> Status </th>                               
+                            <th> Registration date</th> 
+                           
+                            <th> Area</th>
                             <!-- <th> Date</th>                          -->
                           </tr>
                         </thead>
@@ -145,10 +144,8 @@
                             <td>
                               <div class="badge badge-outline-success">{{ license.status}}</div>
                             </td>
-                            <td> {{license.name}} </td>  
-                            <td> {{license.expiry_date}} </td>  
-                            <td> {{license.holder}} </td> 
-                            <td> {{license.core_id}} </td> 
+                            <td> {{license.registration_date}} </td>                                                       
+                            <td> {{license.area}} </td> 
                           </tr>  
                           {% endfor %}                        
                         </tbody>

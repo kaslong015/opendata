@@ -65,6 +65,7 @@ class registeredApplications(models.Model):
     status = models.CharField(max_length=255,blank=True,null=True)        
     applicant = models.CharField(max_length=255,blank=True,null=True)        
     area = models.CharField(max_length=255,blank=True,null=True)
+    name = models.CharField(max_length=255,blank=True,null=True)
 
     def __str__(self):
         return self.code
@@ -73,12 +74,13 @@ class registeredApplications(models.Model):
 class pendingApplications(models.Model):	
     number = models.CharField(max_length=255,blank=True,null=True) 
     code = models.CharField(max_length=255,blank=True,null=True)        
-    type = models.CharField(max_length=255,blank=True,null=True)        
-    minerals = models.CharField(max_length=255,blank=True,null=True)      
+    type = models.CharField(max_length=255,blank=True,null=True)      
     registration_date = models.CharField(max_length=255,blank=True,null=True)        
     status = models.CharField(max_length=255,blank=True,null=True)        
-    applicant = models.CharField(max_length=255,blank=True,null=True)        
+    name= models.CharField(max_length=255,blank=True,null=True)        
     area = models.CharField(max_length=255,blank=True,null=True)
+    applicant = models.CharField(max_length=255,blank=True,null=True)
+    minerals = models.CharField(max_length=255,blank=True,null=True)
 
     def __str__(self):
         return self.code
@@ -92,6 +94,20 @@ class registered_measures(models.Model):
     registration_date = models.CharField(max_length=255,blank=True,null=True)        
     status = models.CharField(max_length=255,blank=True,null=True)        
     area = models.CharField(max_length=255,blank=True,null=True)        
+    def __str__(self):
+        return self.code
+    
+
+class pendingMeasures(models.Model):
+    number = models.CharField(max_length=255,blank=True,null=True)	 
+    code = models.CharField(max_length=255,blank=True,null=True)        
+    name = models.CharField(max_length=255,blank=True,null=True)        
+    type = models.CharField(max_length=255,blank=True,null=True)        
+    registration_date = models.CharField(max_length=255,blank=True,null=True)        
+    status = models.CharField(max_length=255,blank=True,null=True)        
+    area = models.CharField(max_length=255,blank=True,null=True)  
+    minerals  = models.CharField(max_length=255,blank=True,null=True)  
+    applicant = models.CharField(max_length=255,blank=True,null=True)  
     def __str__(self):
         return self.code
     

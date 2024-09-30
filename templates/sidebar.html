@@ -81,36 +81,36 @@
         </div>
       </li>
       <li class="nav-item menu-items">
-        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+        <a class="nav-link" data-toggle="collapse" href="#uiasic" aria-expanded="false" aria-controls="ui-basic">
           <span class="menu-icon">
             <i class="mdi mdi-file-document-box"></i>
           </span>
           <span class="menu-title">Applications</span>
           <i class="menu-arrow"></i>
         </a>
-        <div class="collapse" id="ui-basic">
+        <div class="collapse" id="uiasic">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Recently registered Application</a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Pending Application</a></li>            
+            <li class="nav-item"> <a class="nav-link" href="{% url 'reg_app' %}">Recently registered Application</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{% url 'pen_app' %}">Pending Application</a></li>            
           </ul>
         </div>
       </li>
       <li class="nav-item menu-items">
-        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+        <a class="nav-link" data-toggle="collapse" href="#uibasic" aria-expanded="false" aria-controls="ui-basic">
           <span class="menu-icon">
             <i class="mdi mdi-chart-bar"></i>
           </span>
           <span class="menu-title">Measures</span>
           <i class="menu-arrow"></i>
         </a>
-        <div class="collapse" id="ui-basic">
+        <div class="collapse" id="uibasic">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Recently registed measures</a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Pending Measures</a></li>            
+            <li class="nav-item"> <a class="nav-link" href="{% url 'reg_mes' %}">Recently registed measures</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{% url 'pen_mes' %}">Pending Measures</a></li>            
           </ul>
         </div>
       </li>      
-      <li class="nav-item menu-items">
+      <!-- <li class="nav-item menu-items">
         <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
           <span class="menu-icon">
             <i class="mdi mdi-security"></i>
@@ -127,6 +127,6 @@
             <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
           </ul>
         </div>
-      </li>      
+      </li>       -->
     </ul>
   </nav>
