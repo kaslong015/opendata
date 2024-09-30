@@ -92,7 +92,9 @@ def pending_application_view(request):
         'licenses':lastmonthLicenses,
         'total_licenses':results1.count(),
         'blocked':results.count(),
-        'recent':lastmonthLicenses.count()
+        'recent':lastmonthLicenses.count(),
+        'registed':registed,
+        'pending':pending
     }
     return render(request,'core/pen-app.html',context)
 
@@ -102,10 +104,14 @@ def register_application_view(request):
     results = blockedLicenses.objects.all()
     results1 = Licenses.objects.all().order_by('id')
     lastmonthLicenses = registeredApplications.objects.all()
+    registed = registeredApplications.objects.all().count()
+    pending = pendingApplications.objects.all().count()
     context = {        
         'licenses':lastmonthLicenses,
         'total_licenses':results1.count(),
-        'total_blocked_licenses':results.count(),
-        'recent':lastmonthLicenses.count()
+        'blocked':results.count(),
+        'recent':lastmonthLicenses.count(),
+        'registed':registed,
+        'pending':pending
     }
     return render(request,'core/reg-app.html',context)
