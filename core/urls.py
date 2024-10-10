@@ -13,5 +13,7 @@ urlpatterns = [
     path('login/', Login.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('valid-license/<str:pk>/', ValidDetailView.as_view(), name='valid-detail'),
+    path('block-license/<str:pk>/', BlockDetailView.as_view(), name='block-detail'),
+    path('last-license/<str:pk>/',  LastMonthDetailView.as_view(), name='last-detail'),
 ]
 

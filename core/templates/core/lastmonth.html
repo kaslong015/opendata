@@ -131,15 +131,10 @@
                         <tbody>
                         {% for license in licenses %}
                           <tr>
-                            <!-- <td>
-                              <div class="form-check form-check-muted m-0">
-                                <label class="form-check-label">
-                                  <input type="checkbox" class="form-check-input">
-                                </label>
-                              </div>
-                            </td> -->
-                            <td>                             
-                              <span class="pl-2">{{ license.code}}</span>
+                            <td>  
+                              <a href="{% url 'last-detail' license.id %}" style="text-decoration: none;">                             
+                                <span class="pl-2">{{ license.code}}</span>
+                              </a> 
                             </td>
                             <td> {{license.type}} </td>                                                      
                             <td>

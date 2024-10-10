@@ -1,0 +1,93 @@
+{% extends 'base.html'%}
+{% block title %}block datail page{% endblock title %}
+
+{% load static %}
+
+
+{%block content%}
+    <div class="container-scroller">
+      <!-- partial:partials/_sidebar.html -->
+      {% include 'sidebar.html' %}
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_navbar.html -->
+        {% include 'navbar.html' %}
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            
+            <div class="row ">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Block Licenses Info</h4>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <address>
+                          <p class="font-weight-bold">
+                            Name: <span style="font-weight: 100;">{{license.name}}</span>
+                          </p>
+                          <br>
+                          <p class="font-weight-bold">
+                            Code: <span style="font-weight: 100;">{{license.code}}</span>
+                          </p>
+                          <br>
+                          <p class="font-weight-bold">
+                            Holder: <span style="font-weight: 100;">{{license.holder}}</span>
+                          </p>
+                          <br>
+                          <p class="font-weight-bold">
+                            Type: <span style="font-weight: 100;">{{license.type}}</span>
+                          </p>
+                          <br>
+                          <p class="font-weight-bold">
+                            Status: <span style="font-weight: 100;">{{license.status}}</span>
+                          </p>
+                          <br>
+                          <p class="font-weight-bold">
+                            Core Id : <span style="font-weight: 100;">{{license.core_id}}</span>
+                          </p>
+                          <br>
+                          <p class="font-weight-bold">
+                            Cadastral Unit: <span style="font-weight: 100;">{{license.cadastral_unit}} (CU)</span>
+                          </p>
+                          <br>
+                          <p class="font-weight-bold">
+                            Granted Date: <span style="font-weight: 100;">{{license.grant_date}}</span>
+                          </p>
+                          <br>
+                          <p class="font-weight-bold">
+                            Expiry Date: <span style="font-weight: 100;">{{license.expiry_date}}</span>
+                          </p>
+                          <br>
+                          <a href="javascript:history.go(-1)" class="btn btn-primary">back</a> 
+                        </address>
+                      </div>
+                      <div class="col-md-6">                                             
+                      </div>
+                      <div class="card-body">               
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>         
+            
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          <footer class="footer">
+            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright ©  2020</span>
+              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"><a href="#" target="_blank">dorogis</a></span>
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+   {% endblock content%}
+   

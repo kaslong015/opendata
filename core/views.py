@@ -163,7 +163,18 @@ class LogoutView(RedirectView):
 
 class ValidDetailView(DetailView):
     model = Licenses
-    template_name = 'core/detail.html'
+    template_name = 'core/details/detail.html'
     context_object_name = 'license'
 
+
+class BlockDetailView(DetailView):
+    model = blockedLicenses
+    template_name = 'core/details/block.html'
+    context_object_name = 'license'
+
+
+class LastMonthDetailView(DetailView):
+    model = lastMonthLicenses
+    template_name = 'core/details/lastmonth.html'
+    context_object_name = 'license'
     
