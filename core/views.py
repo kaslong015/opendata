@@ -159,3 +159,11 @@ class LogoutView(RedirectView):
     def get(self, request, *args, **kwargs):
         auth_logout(request)
         return super(LogoutView, self).get(request, *args, **kwargs)
+
+
+class ValidDetailView(DetailView):
+    model = Licenses
+    template_name = 'core/detail.html'
+    context_object_name = 'license'
+
+    
