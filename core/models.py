@@ -120,3 +120,19 @@ class YearlyCount(models.Model):
 	 
     def __str__(self):
         return self.code
+
+
+class RestrictedAreas(models.Model):
+
+    number = models.CharField(max_length=255,blank=True,null=True)
+    code = models.CharField(max_length=255,blank=True,null=True)
+    name = models.CharField(max_length=255,blank=True,null=True)
+    type = models.CharField(max_length=255,blank=True,null=True)
+    status = models.CharField(max_length=255,blank=True,null=True)
+    enacted_by= models.CharField(max_length=255,blank=True,null=True)
+    decree_number=models.CharField(max_length=255,blank=True,null=True)
+    area = models.CharField(max_length=255,blank=True,null=True)
+
+    def __str__(self):
+        return self.code
+
