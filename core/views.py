@@ -15,12 +15,17 @@ def dashboard(request):
     blocked = blockedLicenses.objects.all().count()
     registed = registeredApplications.objects.all().count()
     pending = pendingApplications.objects.all().count()
+    yearly = [int(x.year) for x in YearlyCount.objects.all()]
+    total_yearly_count = [int(x.total) for x in YearlyCount.objects.all()]
+    print(total_yearly_count)
     context = {        
         'licenses':results,
         'total_licenses':results.count(),
         'blocked':blocked,
         'registed':registed,
-        'pending':pending
+        'pending':pending,
+        'years':yearly,
+        'total_count':total_yearly_count
     }
     return render(request,'core/dashboard.html',context)
 

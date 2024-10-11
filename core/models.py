@@ -113,4 +113,10 @@ class pendingMeasures(models.Model):
     
 
 
+class YearlyCount(models.Model):
+
+    year = models.CharField(max_length=255,blank=True,null=True)
+    total = models.CharField(max_length=255,blank=True,null=True)
 	 
+    def __str__(self):
+        return self.code
