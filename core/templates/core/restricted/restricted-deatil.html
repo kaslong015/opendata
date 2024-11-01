@@ -1,5 +1,5 @@
 {% extends 'base.html'%}
-{% block title %}datail page{% endblock title %}
+{% block title %}Restircted Area datail page{% endblock title %}
 
 {% load static %}
 
@@ -20,7 +20,7 @@
               <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Valid Licenses Info</h4>
+                    <h4 class="card-title">Restricted Area</h4>
                     <div class="row">
                       <div class="col-md-6">
                         <address>
@@ -31,10 +31,9 @@
                           <p class="font-weight-bold">
                             Code: <span style="font-weight: 100;">{{license.code}}</span>
                           </p>
-                          <br>
-                          <p class="font-weight-bold">
+                          <!-- <p class="font-weight-bold">
                             Holder: <span style="font-weight: 100;">{{license.holder}}</span>
-                          </p>
+                          </p> -->
                           <br>
                           <p class="font-weight-bold">
                             Type: <span style="font-weight: 100;">{{license.type}}</span>
@@ -49,23 +48,24 @@
                           </p>
                           <br>
                           <p class="font-weight-bold">
-                            Cadastral Unit: <span style="font-weight: 100;">{{license.cadastral_unit}} (CU)</span>
+                            Cadastral Unit: <span style="font-weight: 100;">{{license.area}} (CU)</span>
                           </p>
                           <br>
-                          <p class="font-weight-bold">
+                          <!-- <p class="font-weight-bold">
                             Granted Date: <span style="font-weight: 100;">{{license.grant_date}}</span>
                           </p>
                           <br>
                           <p class="font-weight-bold">
                             Expiry Date: <span style="font-weight: 100;">{{license.expiry_date}}</span>
-                          </p>
+                          </p> -->
                           <br>
                           <a href="javascript:history.go(-1)" class="btn btn-primary">back</a> 
                         </address>
                       </div>
-                      <div class="col-md-6"> 
-                        <div id="map" style="height: 400px; width: 100%;"></div>                                          
-                      </div>                      
+                      <div class="col-md-6">                                             
+                      </div>
+                      <div class="card-body">               
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -89,21 +89,4 @@
     </div>
     <!-- container-scroller -->
    {% endblock content%}
-   {% block js %}
-    <!-- Leaflet.js JavaScript -->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        // Initialize the map and set its view to Nigeria's geographical center
-        var map = L.map('map').setView([9.0820, 8.6753], 13); // Nigeria coordinates and zoom level
-
-        // Load and display tiles from OpenStreetMap
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        // Add a marker at Nigeria's center (Abuja)
-        // L.marker([9.0820, 8.6753]).addTo(map)
-        //     .bindPopup('Nigeria, centered here.<br> You can add more markers.')
-        //     .openPopup();
-    </script>
-  {% endblock js %} 
+   

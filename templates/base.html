@@ -10,6 +10,10 @@
      <link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css'%}">
     <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css'%}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sX8g4ZtQU7K7LwOJCC1v8bTAk3KsU/gOcD6mCkNxfJ09FzA9r6IHMTKDHZw+93zC" crossorigin=""/>
+  
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-ys3glpjq1FspMKbuQCHTULF8v4KNlxTLoUfjJjA/NOa/2iGweFd/UhM0z23yxmBJ" crossorigin=""></script>
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <link rel="stylesheet" href="{% static 'vendors/jvectormap/jquery-jvectormap.css'%}">
@@ -57,7 +61,7 @@
  <!-- <script src="{% static '/js/chart.js'%}"></script> -->
  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
- 
+ {% block js %}{%endblock js %}
  <!-- End custom js for this page -->
   <script>
     // new DataTable('#example');

@@ -1,7 +1,7 @@
 {% extends 'base.html'%}
 
 {% load static %}
-{% block title%} lastmonth {%endblock title%}
+{% block title%} restricted areas {%endblock title%}
 
 {%block content%}
     <div class="container-scroller">
@@ -106,7 +106,7 @@
               <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Licenses granted within the last month</h4>
+                    <h4 class="card-title"> Restricted area does Not block licensing </h4>
                     <div class="table-responsive">
                       <table class="table display" id="example" class="" style="width:100%">
                         <thead>
@@ -122,28 +122,28 @@
                             <th> Type</th>
                             <th> Status </th>  
                             <th> Name</th>  
-                            <th> Expiry date</th> 
-                            <th> Holder </th>  
-                            <th> Core Id</th> 
+                            <th> enacted_by</th> 
+                            <th> decree_number </th>  
+                            <th> Area </th> 
                             <!-- <th> Date</th>                          -->
                           </tr>
                         </thead>
                         <tbody>
-                        {% for license in licenses %}
+                        {% for area in notblockingrestricedareas %}
                           <tr>
                             <td>  
-                              <a href="{% url 'last-detail' license.id %}" style="text-decoration: none;">                             
-                                <span class="pl-2">{{ license.code}}</span>
+                              <a href="{% url 'restricted-area' area.id %}" style="text-decoration: none;">                             
+                                <span class="pl-2">{{ area.code}}</span>
                               </a> 
                             </td>
-                            <td> {{license.type}} </td>                                                      
+                            <td> {{area.type}} </td>                                                      
                             <td>
-                              <div class="badge badge-outline-success">{{ license.status}}</div>
+                              <div class="badge badge-outline-success">{{ area.status}}</div>
                             </td>
-                            <td> {{license.name}} </td>  
-                            <td> {{license.expiry_date}} </td>  
-                            <td> {{license.holder}} </td> 
-                            <td> {{license.core_id}} </td> 
+                            <td> {{area.name}} </td>  
+                            <td> {{area.enacted_by}} </td>  
+                            <td> {{area.decree_number }} </td> 
+                            <td> {{area.area}} </td> 
                           </tr>  
                           {% endfor %}                        
                         </tbody>
@@ -173,3 +173,4 @@
     </div>
     <!-- container-scroller -->
    {% endblock content%}
+   

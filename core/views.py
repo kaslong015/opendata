@@ -11,121 +11,79 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 @login_required(login_url='login')
 def dashboard(request):
-    results = Licenses.objects.all().order_by('id')
-    blocked = blockedLicenses.objects.all().count()
-    registed = registeredApplications.objects.all().count()
-    pending = pendingApplications.objects.all().count()
+    results = Licenses.objects.all().order_by('id')   
     yearly = [int(x.year) for x in YearlyCount.objects.all()]
     total_yearly_count = [int(x.total) for x in YearlyCount.objects.all()]
-    print(total_yearly_count)
+    # print(total_yearly_count)
     context = {        
-        'licenses':results,
-        'total_licenses':results.count(),
-        'blocked':blocked,
-        'registed':registed,
-        'pending':pending,
+        'licenses':results,        
         'years':yearly,
         'total_count':total_yearly_count
     }
     return render(request,'core/dashboard.html',context)
 
+def maps(request):    
+    return render(request,'maps.html')
+
 @login_required(login_url='login')
 def blocked_licenses_view(request):
-    results = blockedLicenses.objects.all()
-    results1 = Licenses.objects.all().order_by('id')   
-    registed = registeredApplications.objects.all().count()
-    pending = pendingApplications.objects.all().count()
+    results = blockedLicenses.objects.all()   
     context = {        
-        'licenses':results,
-        'total_licenses':results1.count(),
-        'blocked':results.count(),        
-        'registed':registed,
-        'pending':pending
+        'licenses':results,        
     }
     return render(request,'core/block.html',context)
 
 @login_required(login_url='login')
 def registed_measures_view(request):    
-    results1 = Licenses.objects.all().order_by('id')
-    measures = registered_measures.objects.all()
-    blocked_licenses = blockedLicenses.objects.all()
-    registed = registeredApplications.objects.all().count()
-    pending = pendingApplications.objects.all().count()
+   
+    measures = registered_measures.objects.all()     
     context = {        
         'measures':measures,
-        'total_licenses':results1.count(),
-        'blocked':blocked_licenses.count(),                
-        'registed':registed,
-        'pending':pending
+        
     }
     return render(request,'core/registed_measure.html',context)
 
 @login_required(login_url='login')
 def last_month_view(request):
-    results = blockedLicenses.objects.all()
-    results1 = Licenses.objects.all().order_by('id')
-    lastmonthLicenses = lastMonthLicenses.objects.all()
-    registed = registeredApplications.objects.all().count()
-    pending = pendingApplications.objects.all().count()
+    
+    lastmonthLicenses = lastMonthLicenses.objects.all()   
     context = {        
         'licenses':lastmonthLicenses,
-        'total_licenses':results1.count(),
-        'blocked':results.count(),
-        'registed':registed,
-        'pending':pending
+        
     }
     return render(request,'core/lastmonth.html',context)
 
 
 @login_required(login_url='login')
 def pending_measures_view(request):
-    results = blockedLicenses.objects.all()
-    results1 = Licenses.objects.all().order_by('id')
+    
     lastmonthLicenses = pendingMeasures.objects.all()
-    registed = registeredApplications.objects.all().count()
-    pending = pendingApplications.objects.all().count()
+    
     context = {        
         'licenses':lastmonthLicenses,
-        'total_licenses':results1.count(),
-        'blocked':results.count(),
-        'registed':registed,
-        'pending':pending
+        
     }
     return render(request,'core/pending_measure.html',context)
 
 
 @login_required(login_url='login')
 def pending_application_view(request):
-    results = blockedLicenses.objects.all()
-    results1 = Licenses.objects.all().order_by('id')
-    lastmonthLicenses = pendingApplications.objects.all()
-    registed = registeredApplications.objects.all().count()
-    pending = pendingApplications.objects.all().count()
+   
+    lastmonthLicenses = pendingApplications.objects.all()   
     context = {        
-        'licenses':lastmonthLicenses,
-        'total_licenses':results1.count(),
-        'blocked':results.count(),
-        'recent':lastmonthLicenses.count(),
-        'registed':registed,
-        'pending':pending
+        'licenses':lastmonthLicenses,       
+        
     }
     return render(request,'core/pen-app.html',context)
 
 
 @login_required(login_url='login')
-def register_application_view(request):
-    results = blockedLicenses.objects.all()
-    results1 = Licenses.objects.all().order_by('id')
-    lastmonthLicenses = registeredApplications.objects.all()
-    registed = registeredApplications.objects.all().count()
-    pending = pendingApplications.objects.all().count()
+def register_application_view(request):  
+
+    lastmonthLicenses = registeredApplications.objects.all()   
     context = {        
-        'licenses':lastmonthLicenses,
-        'total_licenses':results1.count(),
-        'blocked':results.count(),
-        'recent':lastmonthLicenses.count(),
-        'registed':registed,
-        'pending':pending
+        'licenses':lastmonthLicenses,        
+        
     }
     return render(request,'core/reg-app.html',context)
 
@@ -166,20 +124,53 @@ class LogoutView(RedirectView):
         return super(LogoutView, self).get(request, *args, **kwargs)
 
 
-class ValidDetailView(DetailView):
+class ValidDetailView(DetailView,LoginRequiredMixin):
     model = Licenses
     template_name = 'core/details/detail.html'
     context_object_name = 'license'
 
 
-class BlockDetailView(DetailView):
+class BlockDetailView(DetailView,LoginRequiredMixin):
     model = blockedLicenses
     template_name = 'core/details/block.html'
     context_object_name = 'license'
 
 
-class LastMonthDetailView(DetailView):
+class LastMonthDetailView(DetailView,LoginRequiredMixin):
     model = lastMonthLicenses
     template_name = 'core/details/lastmonth.html'
     context_object_name = 'license'
     
+
+class RestrictedAreaDetailView(DetailView,LoginRequiredMixin):
+    model = RestrictedAreas
+    template_name = 'core/restricted/restricted-deatil.html'
+    context_object_name = 'license'
+
+class RestrictedAreaListView(ListView,LoginRequiredMixin):
+    model = RestrictedAreas
+    context_object_name = 'restrictedareas'   # your own name for the list as a template variable
+    queryset = RestrictedAreas.objects.all() 
+    template_name = 'core/restricted/allareas.html'  
+
+
+class RestrictedblocksLicensingAreaListView(ListView,LoginRequiredMixin):
+    model = RestrictedAreas
+    context_object_name = 'blockingrestricedareas'   # your own name for the list as a template variable
+    queryset = RestrictedAreas.objects.all().filter(type='Restricted area (blocks licensing)')    
+    template_name = 'core/restricted/restricted-block.html' 
+
+
+class RestrictedNotblocksLicensingAreaListView(ListView,LoginRequiredMixin):
+    model = RestrictedAreas
+    context_object_name = 'notblockingrestricedareas'   # your own name for the list as a template variable
+    queryset = RestrictedAreas.objects.all().filter(type='Restricted area (does not block licensing)')    
+    template_name = 'core/restricted/notrestricted-blocked.html' 
+
+
+class OtherRestrictedblockedLicensingAreaListView(ListView,LoginRequiredMixin):
+    model = RestrictedAreas
+    context_object_name = 'otherrestricedareas'   # your own name for the list as a template variable
+    queryset = RestrictedAreas.objects.all().filter(type='Other restricted area (does not block licensing)')
+    template_name = 'core/restricted/other-restricted.html'
+
