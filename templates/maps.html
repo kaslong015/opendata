@@ -20,18 +20,46 @@
     <!-- Leaflet.js JavaScript -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        // Initialize the map and set its view to Nigeria's geographical center
-        var map = L.map('map').setView([9.0820, 8.6753], 6); // Nigeria coordinates and zoom level
+      // Define green color palette (you can adjust shades of green as needed)
+    const greenColors = ['#28a745', '#4CAF50', '#388E3C', '#8BC34A', '#4CAF50'];
 
-        // Load and display tiles from OpenStreetMap
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+// Initialize the map
+const map = L.map('map').setView([8.233333, 6.320833], 8);
 
-        // Add a marker at Nigeria's center (Abuja)
-        // L.marker([9.0820, 8.6753]).addTo(map)
-        //     .bindPopup('Nigeria, centered here.<br> You can add more markers.')
-        //     .openPopup();
+// Add a tile layer (OpenStreetMap)
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+}).addTo(map);
+
+// Fetch the coordinates JSON from Django
+fetch("{% url 'load_coordinates' %}")
+    .then(response => response.json())
+    .then(data => {
+        let colorIndex = 0;
+
+        // Iterate over each key in the JSON data
+        for (const id in data) {
+            if (data.hasOwnProperty(id)) {
+                // Get the array of coordinate objects
+                const coordinates = data[id].map(point => [point.lat, point.lng]);
+
+                // Select a green color from the palette and cycle through it
+                const color = greenColors[colorIndex % greenColors.length];
+                colorIndex++;
+
+                // Create a polygon with the selected green color
+                const polygon = L.polygon(coordinates, {
+                    color: color,  // Outline color
+                    fillColor: color,  // Fill color
+                    fillOpacity: 0.5
+                }).addTo(map);
+
+                // Add a popup to show the ID
+                polygon.bindPopup(`<b>ID:</b> ${id}`);
+            }
+        }
+    })
+    .catch(error => console.error('Error loading JSON:', error));
     </script>
 </body>
 </html>

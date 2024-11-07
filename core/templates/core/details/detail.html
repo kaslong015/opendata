@@ -93,17 +93,62 @@
     <!-- Leaflet.js JavaScript -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        // Initialize the map and set its view to Nigeria's geographical center
-        var map = L.map('map').setView([9.0820, 8.6753], 13); // Nigeria coordinates and zoom level
+         var map = L.map('map').setView([10.14, 9.5], 12);
 
-        // Load and display tiles from OpenStreetMap
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          // Add OpenStreetMap tile layer
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              maxZoom: 18,
+              attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          }).addTo(map);
+
+
+
+          const coordinates = [
+            { lat: 10.1125, lng: 9.4625 },
+            { lat: 10.1125, lng: 9.5167 },
+            { lat: 10.1208, lng: 9.5167 },
+            { lat: 10.1208, lng: 9.5875 },
+            { lat: 10.1583, lng: 9.5875 },
+            { lat: 10.1583, lng: 9.55 },
+            { lat: 10.1708, lng: 9.55 },
+            { lat: 10.1708, lng: 9.4625 }
+        ];
+
+        // Step 4: Convert to an array format Leaflet can read (an array of [lat, lng] pairs)
+        const latLngs = coordinates.map(coord => [coord.lat, coord.lng]);
+
+        // Step 5: Create the polygon and add it to the map
+        const polygon = L.polygon(latLngs, {
+            color: 'blue',     // Polygon color
+            fillColor: '#3388ff',
+            fillOpacity: 0.5
         }).addTo(map);
 
-        // Add a marker at Nigeria's center (Abuja)
-        // L.marker([9.0820, 8.6753]).addTo(map)
-        //     .bindPopup('Nigeria, centered here.<br> You can add more markers.')
-        //     .openPopup();
+
+
+          const myVariable = "{{ cords }}";
+          
+          // Define the coordinates for the polygon
+        
+          var latlngs = [
+           
+          ];
+
+          console.log(latlngs)
+
+          // Create and add the polygon to the map
+          // var polygon = L.polygon(latlngs, { color: 'green', fillColor: '#33ff88', fillOpacity: 0.5 });
+          polygon.addTo(map);
+
+          // Calculate the center of the polygon to place the text
+          var center = polygon.getBounds().getCenter();
+
+          // Add a marker with text at the center of the polygon
+          L.marker(center).addTo(map)
+              .bindTooltip("EL-059788", { permanent: true, className: "leaflet-tooltip-text", offset: [0, 0] })
+              .openTooltip();
+
+          // Adjust the map view to fit the polygon bounds
+          map.fitBounds(polygon.getBounds());
     </script>
   {% endblock js %} 

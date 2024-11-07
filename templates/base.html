@@ -76,6 +76,7 @@
 
      $().ready(function(){
        const ctx = document.getElementById('myChart');
+       let delayed;
      
        new Chart(ctx, {
          type: 'bar',
@@ -87,7 +88,7 @@
              borderWidth: 1
            }]
          },
-         options: {
+         options: {          
            scales: {
              y: {
                beginAtZero: true

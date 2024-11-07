@@ -7,6 +7,28 @@ from django.contrib.auth import logout as auth_logout, login
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+import csv
+import json
+from django.http import JsonResponse
+from collections import defaultdict
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+def load_coordinates(request):
+    # Update this path to your CSV file location
+    file_path = BASE_DIR /'converted_coordinates1_output.csv'  
+    data_dict = defaultdict(list)
+
+    # Read the CSV file and populate the dictionary
+    with open(file_path, newline='') as csvfile:
+        reader = csv.reader(csvfile)
+        next(reader)  # Skip header if exists
+
+        for row in reader:
+            id_, lat, lng = row[0], float(row[1]), float(row[2])
+            data_dict[id_].append({"lat": lat, "lng": lng})
+
+    return JsonResponse(data_dict)
 
 # Create your views here.
 @login_required(login_url='login')
@@ -128,6 +150,19 @@ class ValidDetailView(DetailView,LoginRequiredMixin):
     model = Licenses
     template_name = 'core/details/detail.html'
     context_object_name = 'license'
+
+    def get_context_data(self, **kwargs):
+        # Get the default context data from the parent class
+        context = super().get_context_data(**kwargs)
+        
+        # Get all coordinates with code and return them as context in the view
+        latLog = Coordinates.objects.filter(code=context['license'])
+        
+        #adding contetx name to the context object  
+        context['cords'] = latLog      
+
+        # You can add more context as needed
+        return context
 
 
 class BlockDetailView(DetailView,LoginRequiredMixin):

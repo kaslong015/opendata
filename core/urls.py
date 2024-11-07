@@ -20,6 +20,7 @@ urlpatterns = [
     path('restricted-area/<str:pk>/', RestrictedAreaDetailView.as_view(), name='restricted-area'),
     path('restricted-block-area/', RestrictedblocksLicensingAreaListView.as_view(), name='restricted-area-block'),
     path('other-restricted-area/', OtherRestrictedblockedLicensingAreaListView.as_view(), name='other-restricted-area'),
+    path('load-coordinates/', load_coordinates, name='load_coordinates'),
     path('map/', maps, name='map'),
 ]
 
