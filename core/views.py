@@ -19,12 +19,14 @@ def load_coordinates(request):
     file_path = BASE_DIR /'converted_coordinates1_output.csv'  
     data_dict = defaultdict(list)
 
+
     # Read the CSV file and populate the dictionary
     with open(file_path, newline='') as csvfile:
         reader = csv.reader(csvfile)
         next(reader)  # Skip header if exists
 
         for row in reader:
+            # print(row)
             id_, lat, lng = row[0], float(row[1]), float(row[2])
             data_dict[id_].append({"lat": lat, "lng": lng})
 
