@@ -3,10 +3,10 @@ from django.db import models
 # Create your models here.
 
 
-class  Licenses(models.Model):
+class Licenses(models.Model):
     type = models.CharField(max_length=255,blank=True,null=True)
     number = models.CharField(max_length=255,blank=True,null=True)
-    code = models.CharField(max_length=255,blank=True,null=True)
+    code = models.CharField(max_length=255,blank=True,null=True,unique=True)
     status = models.CharField(max_length=255,blank=True,null=True)
     created_at = models.DateTimeField(auto_now=True)    
     core_id = models.CharField(max_length=255,blank=True,null=True)

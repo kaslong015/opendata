@@ -1,24 +1,24 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from .models import *
-from django.views.generic import RedirectView, ListView, UpdateView, DeleteView, FormView, DetailView
+from django.views.generic import RedirectView, ListView, UpdateView, DeleteView, FormView, DetailView,View
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import logout as auth_logout, login
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-import csv
-import json
 from django.http import JsonResponse
 from collections import defaultdict
 from pathlib import Path
+import csv
+import json
+import pandas as pd
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 def load_coordinates(request):
     # Update this path to your CSV file location
     file_path = BASE_DIR /'converted_coordinates1_output.csv'  
     data_dict = defaultdict(list)
-
 
     # Read the CSV file and populate the dictionary
     with open(file_path, newline='') as csvfile:
@@ -161,8 +161,8 @@ class ValidDetailView(DetailView,LoginRequiredMixin):
         latLog = Coordinates.objects.filter(code=context['license'])
         
         #adding contetx name to the context object  
-        context['cords'] = latLog      
-
+        context['cords'] = latLog  
+        
         # You can add more context as needed
         return context
 
@@ -210,4 +210,22 @@ class OtherRestrictedblockedLicensingAreaListView(ListView,LoginRequiredMixin):
     context_object_name = 'otherrestricedareas'   # your own name for the list as a template variable
     queryset = RestrictedAreas.objects.all().filter(type='Other restricted area (does not block licensing)')
     template_name = 'core/restricted/other-restricted.html'
+
+
+
+class LoadCoordinatesView(View):
+    def get(self, request, record_id):
+        # Load data from the CSV file
+        path_to_file =  BASE_DIR /'converted_coordinates1_output.csv'  
+        df = pd.read_csv(path_to_file, header=None, names=["ID","Latitude_Decimal","Longitude_Decimal"])
+        
+        # Filter data by record_id
+        filtered_data = df[df['ID'] == record_id]
+
+        # Convert to JSON format expected by Leaflet
+        coordinates = [{"lat": row.Latitude_Decimal, "lng": row.Longitude_Decimal} for _, row in filtered_data.iterrows()]
+        response_data = {record_id: coordinates}
+        
+        return JsonResponse(response_data)
+
 

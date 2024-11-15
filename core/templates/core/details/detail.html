@@ -93,62 +93,56 @@
     <!-- Leaflet.js JavaScript -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-         var map = L.map('map').setView([10.14, 9.5], 12);
+      const greenColors = ['#28a745', '#4CAF50', '#388E3C', '#8BC34A', '#4CAF50'];
 
-          // Add OpenStreetMap tile layer
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-              maxZoom: 18,
-              attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          }).addTo(map);
+     
+      // Fetch the coordinates for a specific record ID
+      const recordID = '{{license.code}}'; // Change this to dynamically set the ID if needed
+      // console.log(recordID)
+      const baseurl = 'http://localhost:8000/load-coordinates/'.concat(recordID).concat('/')
+      console.log(baseurl)
+      fetch(baseurl)
+          .then(response => response.json())
+          .then(data => {
+              // Only one polygon is expected, so no looping over IDs
+              const coordinates = data[recordID].map(point => [point.lat, point.lng]);
+              console.log(coordinates)
+              // Initialize the map
+              const map = L.map('map').setView([coordinates[0][0], coordinates[0][1]], 8);
+
+              // Add a tile layer
+              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                  maxZoom: 18,
+              }).addTo(map);
+
+              // Use a single color from the green palette
+              const color = greenColors[0];
+
+              // Create the polygon
+              const polygon = L.polygon(coordinates, {
+                  color: color,
+                  fillColor: color,
+                  fillOpacity: 0.5
+              }).addTo(map);
+
+              map.fitBounds(polygon.getBounds());
+              // Add a popup showing the ID
+              polygon.bindPopup(`<b>ID:</b> ${recordID}`);
 
 
+               // Add text to the background of the polygon using divIcon
+            const polygonCenter = polygon.getBounds().getCenter();
 
-          const coordinates = [
-            { lat: 10.1125, lng: 9.4625 },
-            { lat: 10.1125, lng: 9.5167 },
-            { lat: 10.1208, lng: 9.5167 },
-            { lat: 10.1208, lng: 9.5875 },
-            { lat: 10.1583, lng: 9.5875 },
-            { lat: 10.1583, lng: 9.55 },
-            { lat: 10.1708, lng: 9.55 },
-            { lat: 10.1708, lng: 9.4625 }
-        ];
+            const textIcon = L.divIcon({
+                className: 'polygon-text',
+                html: `<div style="font-size: 16px; font-weight: bold; color: white; background-color: rgba(0, 0, 0, 0.5); padding: 5px; border-radius: 5px;">${recordID}</div>`,
+                iconSize: [100, 50], // Adjust size as needed
+                iconAnchor: [50, 25] // Position the text at the center
+            });
 
-        // Step 4: Convert to an array format Leaflet can read (an array of [lat, lng] pairs)
-        const latLngs = coordinates.map(coord => [coord.lat, coord.lng]);
-
-        // Step 5: Create the polygon and add it to the map
-        const polygon = L.polygon(latLngs, {
-            color: 'blue',     // Polygon color
-            fillColor: '#3388ff',
-            fillOpacity: 0.5
-        }).addTo(map);
-
-
-
-          const myVariable = "{{ cords }}";
-          
-          // Define the coordinates for the polygon
-        
-          var latlngs = [
-           
-          ];
-
-          console.log(latlngs)
-
-          // Create and add the polygon to the map
-          // var polygon = L.polygon(latlngs, { color: 'green', fillColor: '#33ff88', fillOpacity: 0.5 });
-          polygon.addTo(map);
-
-          // Calculate the center of the polygon to place the text
-          var center = polygon.getBounds().getCenter();
-
-          // Add a marker with text at the center of the polygon
-          L.marker(center).addTo(map)
-              .bindTooltip("EL-059788", { permanent: true, className: "leaflet-tooltip-text", offset: [0, 0] })
-              .openTooltip();
-
-          // Adjust the map view to fit the polygon bounds
-          map.fitBounds(polygon.getBounds());
-    </script>
+            // Create a marker with the text and place it at the center of the polygon
+            L.marker(polygonCenter, { icon: textIcon }).addTo(map);
+          })
+          .catch(error => console.error('Error loading JSON:', error));
+  </script>
   {% endblock js %} 

@@ -13,14 +13,15 @@ urlpatterns = [
     path('register/', RegisterPage.as_view(), name="register"),
     path('login/', Login.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path('valid-license/<str:pk>/', ValidDetailView.as_view(), name='valid-detail'),
+    path('valid-license/<slug:pk>/', ValidDetailView.as_view(), name='valid-detail'),
     path('block-license/<str:pk>/', BlockDetailView.as_view(), name='block-detail'),
     path('last-license/<str:pk>/',  LastMonthDetailView.as_view(), name='last-detail'),
     path('restricted/all/',RestrictedAreaListView.as_view(), name='restricted-all'),
+    path('load-coordinates/<str:record_id>/', LoadCoordinatesView.as_view(), name='load_coordinates'),
     path('restricted-area/<str:pk>/', RestrictedAreaDetailView.as_view(), name='restricted-area'),
     path('restricted-block-area/', RestrictedblocksLicensingAreaListView.as_view(), name='restricted-area-block'),
     path('other-restricted-area/', OtherRestrictedblockedLicensingAreaListView.as_view(), name='other-restricted-area'),
-    path('load-coordinates/', load_coordinates, name='load_coordinates'),
+    path('load-coordinates/', load_coordinates, name='load_coordinates'),    
     path('map/', maps, name='map'),
 ]
 
