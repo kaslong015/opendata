@@ -23,5 +23,6 @@ urlpatterns = [
     path('other-restricted-area/', OtherRestrictedblockedLicensingAreaListView.as_view(), name='other-restricted-area'),
     path('load-coordinates/', load_coordinates, name='load_coordinates'),    
     path('map/', maps, name='map'),
+    path('geojsonmap/',geological_map, name='geological_map'),
 ]
 

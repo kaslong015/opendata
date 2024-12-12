@@ -15,6 +15,10 @@ import json
 import pandas as pd
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+def geological_map(request):
+    return render(request, 'geojsonmap.html')
+
 def load_coordinates(request):
     # Update this path to your CSV file location
     file_path = BASE_DIR /'converted_coordinates1_output.csv'  

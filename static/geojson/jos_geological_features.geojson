@@ -1,0 +1,47 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        8.521,
+                        9.82
+                    ],
+                    [
+                        8.55,
+                        9.75
+                    ],
+                    [
+                        8.6,
+                        9.7
+                    ]
+                ]
+            },
+            "properties": {
+                "geological": "fault",
+                "name": "Jos Fault Line",
+                "description": "Major fault line in Plateau State, Nigeria",
+                "source": "Geological Survey of Nigeria"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.536,
+                    9.84
+                ]
+            },
+            "properties": {
+                "geological": "outcrop",
+                "material": "granite",
+                "description": "Granite outcrop in Jos Plateau",
+                "source": "Geological Survey of Nigeria"
+            }
+        }
+    ]
+}
