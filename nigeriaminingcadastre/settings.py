@@ -90,7 +90,8 @@ WSGI_APPLICATION = 'nigeriaminingcadastre.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.parse(
-        'postgresql://postgres.vhnzvaobshwdolxpmdwl:nCnQ2KXWUNdYD6V3@aws-0-eu-central-1.pooler.supabase.com:6543/postgres', 
+        'postgresql://postgres.vhnzvaobshwdolxpmdwl:WlXRD0FzfBuwZOp9@aws-0-eu-central-1.pooler.supabase.com:5432/postgres',
+        # 'postgresql://postgres:WlXRD0FzfBuwZOp9@db.vhnzvaobshwdolxpmdwl.supabase.co:5432/postgres',       
         conn_max_age=600,  # Keep the connection open for better performance
         ssl_require=True    # Ensure that the connection uses SSL
     )
