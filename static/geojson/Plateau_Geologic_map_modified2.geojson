@@ -1,0 +1,412 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Abia",
+          "minerals": ["Gold", "Limestone", "Salt"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [7.4867, 5.5327]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Adamawa",
+          "minerals": ["Bentonite", "Gypsum", "Kaolin"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [13.2543, 9.3265]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Akwa Ibom",
+          "minerals": ["Clay", "Lead", "Uranium"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [7.8536, 4.9057]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Anambra",
+          "minerals": ["Clay", "Iron Ore", "Phosphate"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [6.9369, 6.2109]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Bauchi",
+          "minerals": ["Gold", "Tantalite", "Wolframite"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [10.3010, 10.3158]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Bayelsa",
+          "minerals": ["Clay", "Gypsum", "Oil/Gas"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [6.0696, 4.7719]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Benue",
+          "minerals": ["Barite", "Clay", "Limestone"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [8.6761, 7.3369]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Borno",
+          "minerals": ["Diatomite", "Limestone", "Potash"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [13.1514, 11.8333]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Cross River",
+          "minerals": ["Limestone", "Salt", "Titanium"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [8.5988, 5.8702]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Delta",
+          "minerals": ["Clay", "Glass Sand", "Oil/Gas"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [5.9333, 5.5983]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Ebonyi",
+          "minerals": ["Lead", "Salt", "Zinc"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [8.0833, 6.2463]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Edo",
+          "minerals": ["Bitumen", "Gold", "Limestone"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [6.2676, 6.6342]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Ekiti",
+          "minerals": ["Feldspar", "Kaolin", "Tantalite"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [5.3103, 7.6233]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Enugu",
+          "minerals": ["Coal", "Limestone", "Iron Ore"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [7.5464, 6.4584]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Gombe",
+          "minerals": ["Gemstones", "Gypsum", "Limestone"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [11.1714, 10.2897]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Imo",
+          "minerals": ["Crude Oil", "Lead", "Zinc"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [7.0266, 5.4836]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Jigawa",
+          "minerals": ["Butyles", "Quartz", "Silica Sand"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [9.7733, 12.2280]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Kaduna",
+          "minerals": ["Amethyst", "Graphite", "Tantalite"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [7.4388, 10.5105]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Kano",
+          "minerals": ["Copper", "Gemstones", "Tantalite"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [8.5167, 11.9964]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Katsina",
+          "minerals": ["Kaolin", "Manganese", "Salt"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [7.6223, 12.9855]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Kebbi",
+          "minerals": ["Gold", "Iron Ore", "Quartz"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [4.1994, 12.4504]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Kogi",
+          "minerals": ["Coal", "Dolomite", "Iron Ore"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [6.7296, 7.8004]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Kwara",
+          "minerals": ["Cassiterite", "Columbite", "Tantalite"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [4.5500, 8.5000]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Lagos",
+          "minerals": ["Glass Sand", "Granite", "Oil/Gas"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [3.3792, 6.5244]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Nasarawa",
+          "minerals": ["Barite", "Coal", "Salt"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [8.5129, 8.4998]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Niger",
+          "minerals": ["Gold", "Lead", "Talc"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [6.0267, 9.9309]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Ogun",
+          "minerals": ["Bitumen", "Clay", "Limestone"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [3.3479, 6.9980]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Ondo",
+          "minerals": ["Bitumen", "Clay", "Cocoa"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [5.1477, 6.9149]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Osun",
+          "minerals": ["Gold", "Granite", "Talc"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [4.5200, 7.6000]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Oyo",
+          "minerals": ["Aquamarine", "Gemstones", "Talc"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [3.9300, 8.1500]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Plateau",
+          "minerals": ["Barite", "Cassiterite", "Tin"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [9.8965, 8.8990]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Rivers",
+          "minerals": ["Crude Oil", "Glass Sand", "Marble"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [6.9112, 4.8396]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Sokoto",
+          "minerals": ["Gypsum", "Limestone", "Salt"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [5.2433, 13.0059]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Taraba",
+          "minerals": ["Coal", "Kaolin", "Zinc"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [9.7600, 7.8700]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Yobe",
+          "minerals": ["Gypsum", "Kaolin", "Tintomite"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [11.9664, 11.7480]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "Zamfara",
+          "minerals": ["Gold", "Copper", "Iron Ore"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [6.6616, 12.1222]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "state": "FCT (Abuja)",
+          "minerals": ["Clay", "Dolomite", "Marble"]
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [7.3986, 9.0765]
+        }
+      }
+    ]
+  }

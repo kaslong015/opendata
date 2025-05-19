@@ -7,7 +7,7 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <style>
         #map {
-            height: 600px;
+            height: 100vh;
             width: 100%;
         }
     </style>
@@ -17,7 +17,7 @@
     <div id="map"></div>
     <script>
         // Initialize the map
-        var map = L.map('map').setView([9.8, 8.5], 10); // Centered on Plateau State, Nigeria
+        var map = L.map('map').setView([9.8, 8.5], 7); // Centered on Plateau State, Nigeria
 
         // Add a tile layer
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -25,12 +25,39 @@
         }).addTo(map);
 
         // Load the GeoJSON file
-        fetch("{% static 'geojson/jos_geological_features.geojson' %}")
-            .then(response => response.json())
+        // fetch("{% static 'geojson/jos_geological_features.geojson' %}")
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         L.geoJSON(data).addTo(map);
+        //     })
+        //     .catch(err => console.error(err));
+
+        fetch("{% static 'geojson/Plateau_Geologic_map_modified.geojson' %}")
+        .then(response => response.json())
             .then(data => {
-                L.geoJSON(data).addTo(map);
+                L.geoJSON(data, {
+                    style: function(feature) {
+                        return {
+                            color: feature.properties.color, // Use the color from properties
+                            weight: 2,
+                            opacity: 1,
+                            fillOpacity: 0.6
+                        };
+                    },
+                    onEachFeature: function(feature, layer) {
+                        let props = feature.properties;
+                        let tooltipContent = `<strong>Symbol:</strong> ${feature.properties.SYMBOL || "N/A"}<br>
+                                            <strong>Rock Type:</strong> ${feature.properties.ROCKTYPE || "N/A"}<br>
+                                            <strong>Formation:</strong> ${feature.properties.FORMATION || "N/A"}<br>
+                                            <strong>Age:</strong> ${feature.properties.AGE || "N/A"}<br>
+                                            <strong>Period:</strong> ${feature.properties.PERIOD || "N/A"}`;
+
+                        layer.bindTooltip(tooltipContent, { sticky: true });
+                    }
+                }).addTo(map);
             })
             .catch(err => console.error(err));
     </script>
 </body>
 </html>
+

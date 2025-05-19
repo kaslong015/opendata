@@ -1,6 +1,7 @@
 {% extends 'base.html'%}
 
 {% load static %}
+{% load cache %}
 {% block title%} Dashboard {%endblock title%}
 
 {%block content%}
@@ -121,7 +122,9 @@
                       <div class="card">
                         <div class="card-body">
                           <h4 class="card-title">Valid license</h4>
+                          {% cache 86400 "home_page_cache" %}
                           <canvas id="myChart" style="height:400px; width:100%;"></canvas>
+                          {% endcache %}
                         </div>
                       </div>
                     </div>
@@ -204,6 +207,8 @@
     </div>
     <p style="display:none" id="hide1">{{years}}</p>
     <!-- container-scroller -->
+    
+    {% cache 600 my_unique_cache_key %}
      {% block chat%}
      <script>
        $().ready(function(){
@@ -273,6 +278,7 @@
        })      
      </script>
      {% endblock chat%}
+     {% endcache %}
     
    {% endblock content%}
    

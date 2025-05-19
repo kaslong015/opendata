@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from collections import defaultdict
+from django.views.decorators.cache import cache_page
 from pathlib import Path
 import csv
 import json
@@ -38,6 +39,7 @@ def load_coordinates(request):
 
 # Create your views here.
 @login_required(login_url='login')
+@cache_page(60 * 30)
 def dashboard(request):
     results = Licenses.objects.all().order_by('id')   
     yearly = [int(x.year) for x in YearlyCount.objects.all()]
@@ -108,9 +110,9 @@ def pending_application_view(request):
 @login_required(login_url='login')
 def register_application_view(request):  
 
-    lastmonthLicenses = registeredApplications.objects.all()   
+    Licenses = registeredApplications.objects.all()   
     context = {        
-        'licenses':lastmonthLicenses,        
+        'licenses':Licenses,        
         
     }
     return render(request,'core/reg-app.html',context)
