@@ -120,11 +120,13 @@
                     </div> -->
                     <div class="col-lg-12 grid-margin stretch-card">
                       <div class="card">
-                        <div class="card-body">
+                        <div class="card-body" id="map" style="width: 1500px;">
                           <h4 class="card-title">Valid license</h4>
-                          {% cache 86400 "home_page_cache" %}
+                          <!-- {% cache 86400 "home_page_cache" %}
                           <canvas id="myChart" style="height:400px; width:100%;"></canvas>
-                          {% endcache %}
+                          {% endcache %} -->
+
+
                         </div>
                       </div>
                     </div>
@@ -210,73 +212,65 @@
     
     {% cache 600 my_unique_cache_key %}
      {% block chat%}
-     <script>
-       $().ready(function(){
-       const ctx = document.getElementById('myChart');
-       const hide1 = document.getElementById('hide1').innerText;
-       
-     
-       new Chart(ctx, {
-         type: 'bar',
-         data: {
-           labels: [1995, 1997, 2004, 2005, 2006, 2007, 2008, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024],
-           datasets: [{
-             label: 'valid licences',
-             data: [1, 1, 1, 155, 14, 52, 1, 59, 40, 27, 34, 63, 100, 169, 294, 341, 377, 716, 1665, 1770, 3794, 1306],
-             borderWidth: 1
-           }]
-         },
-          options: {
-            responsive: false,
-            scales: {
-              y: {
-                beginAtZero: true
+     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+   
+      <script>
+      const greenColors = 
+          [
+          '#28a745', 
+          '#4CAF50', 
+          '#388E3C', 
+          '#8BC34A',
+          '#4CAF50',
+          "#FF0000", 
+          "#FF6347",  
+          "#FF4500", 
+          "#DC143C",   
+          "#B22222",    
+          "#8B0000",    
+          "#FF7F7F", 
+          "#FA8072", 
+
+          ]
+
+      // Initialize the map
+      const map = L.map('map').setView([8.233333, 6.320833], 8);
+
+      // Add a tile layer (OpenStreetMap)
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 18,
+      }).addTo(map);
+
+      // Fetch the coordinates JSON from Django
+      fetch("{% url 'load_coordinates' %}")
+          .then(response => response.json())
+          .then(data => {
+              let colorIndex = 0;
+
+              // Iterate over each key in the JSON data
+              for (const id in data) {
+                  if (data.hasOwnProperty(id)) {
+                      // Get the array of coordinate objects
+                      const coordinates = data[id].map(point => [point.lat, point.lng]);
+
+                      // Select a green color from the palette and cycle through it
+                      const color = greenColors[colorIndex % greenColors.length];
+                      colorIndex++;
+
+                      // Create a polygon with the selected green color
+                      const polygon = L.polygon(coordinates, {
+                          color: color,  // Outline color
+                          fillColor: color,  // Fill color
+                          fillOpacity: 0.5
+                      }).addTo(map);
+
+                      // Add a popup to show the ID
+                      polygon.bindPopup(`<b>ID:</b> ${id}`);
+                  }
               }
-            }
-          }
-        });
-
-        const ctx1 = document.getElementById('myPieChart');
-        new Chart(ctx1, {
-         type: 'doughnut',
-         options: {
-          responsive: false,
-         },
-         data: {
-            labels: [1995, 1997, 2004, 2005, 2006, 2007, 2008, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024],
-            datasets: [{
-              label: 'My First Dataset',
-              data: [1, 1, 1, 155, 14, 52, 1, 59, 40, 27, 34, 63, 100, 169, 294, 341, 377, 716, 1665, 1770, 3794, 1306],
-              backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)',
-                'rgb(176, 76, 176) ',
-                'rgb (79, 252, 16) ',
-                'rgb (73, 161, 228) ',
-                'rgb (76, 149, 56) ',
-                'rgb (156, 118, 125) ',
-                'rgb (73, 195, 17) ',
-                'rgb (47, 100, 96) ',
-                'rgb (58, 104, 87) ',
-                'rgb (50, 37, 49) ',
-                'rgb (245, 174, 178) ',
-                'rgb (217, 250, 202) ',
-                'rgb (225, 77, 94) ',
-                'rgb (247, 196, 220) ',
-                'rgb (122, 166, 226) ',
-                'rgb (134, 74, 227) ',
-                'rgb (240, 199, 17) ',
-                'rgb (72, 235, 9) ',
-                'rgb (135, 188, 18)'
-              ],
-              hoverOffset: 2
-            }]
-          }
-        });        
-
-       })      
-     </script>
+          })
+          .catch(error => console.error('Error loading JSON:', error));
+      </script>
      {% endblock chat%}
      {% endcache %}
     

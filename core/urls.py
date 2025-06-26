@@ -2,7 +2,7 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path('',dashboard,name="dashboard" ),
+    path('',DashboardView.as_view(),name="dashboard" ),
     path('blocked/',blocked_licenses_view,name="blocked" ),
     path('last_month/',last_month_view,name="last" ),
     path('reg_measure/',registed_measures_view,name='reg_mes'),
@@ -24,5 +24,6 @@ urlpatterns = [
     path('load-coordinates/', load_coordinates, name='load_coordinates'),    
     path('map/', maps, name='map'),
     path('geojsonmap/',geological_map, name='geological_map'),
+    # path('dashboard/data/', licenses_data, name='licenses-data'),
 ]
 

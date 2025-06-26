@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from collections import defaultdict
 from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 from pathlib import Path
 import csv
 import json
@@ -22,7 +23,7 @@ def geological_map(request):
 
 def load_coordinates(request):
     # Update this path to your CSV file location
-    file_path = BASE_DIR /'converted_coordinates1_output.csv'  
+    file_path = BASE_DIR /'converted_coordinates2_output.csv'  
     data_dict = defaultdict(list)
 
     # Read the CSV file and populate the dictionary
@@ -38,19 +39,35 @@ def load_coordinates(request):
     return JsonResponse(data_dict)
 
 # Create your views here.
-@login_required(login_url='login')
-@cache_page(60 * 30)
-def dashboard(request):
-    results = Licenses.objects.all().order_by('id')   
-    yearly = [int(x.year) for x in YearlyCount.objects.all()]
-    total_yearly_count = [int(x.total) for x in YearlyCount.objects.all()]
-    # print(total_yearly_count)
-    context = {        
-        'licenses':results,        
-        'years':yearly,
-        'total_count':total_yearly_count
-    }
-    return render(request,'core/dashboard.html',context)
+# @login_required(login_url='login')
+# @cache_page(60 * 30)
+# def dashboard(request):
+#     results = Licenses.objects.all().order_by('id')   
+#     yearly = [int(x.year) for x in YearlyCount.objects.all()]
+#     total_yearly_count = [int(x.total) for x in YearlyCount.objects.all()]
+#     # print(total_yearly_count)
+#     context = {        
+#         'licenses':results,        
+#         'years':yearly,
+#         'total_count':total_yearly_count
+#     }
+#     return render(request,'core/dashboard.html',context)
+
+@method_decorator(cache_page(60 * 30), name='dispatch')
+class DashboardView(LoginRequiredMixin, ListView):
+    model = Licenses
+    template_name = 'core/dashboard.html'
+    context_object_name = 'licenses'
+    # paginate_by = 50
+    ordering = ['id']
+    login_url = 'login'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        yearly_counts = YearlyCount.objects.all()
+        context['years'] = [int(x.year) for x in yearly_counts]
+        context['total_count'] = [int(x.total) for x in yearly_counts]
+        return context
 
 def maps(request):    
     return render(request,'maps.html')
@@ -222,7 +239,7 @@ class OtherRestrictedblockedLicensingAreaListView(ListView,LoginRequiredMixin):
 class LoadCoordinatesView(View):
     def get(self, request, record_id):
         # Load data from the CSV file
-        path_to_file =  BASE_DIR /'converted_coordinates1_output.csv'  
+        path_to_file =  BASE_DIR /'converted_coordinates2_output.csv'  
         df = pd.read_csv(path_to_file, header=None, names=["ID","Latitude_Decimal","Longitude_Decimal"])
         
         # Filter data by record_id
@@ -231,6 +248,7 @@ class LoadCoordinatesView(View):
         # Convert to JSON format expected by Leaflet
         coordinates = [{"lat": row.Latitude_Decimal, "lng": row.Longitude_Decimal} for _, row in filtered_data.iterrows()]
         response_data = {record_id: coordinates}
+        # print(response_data)
         
         return JsonResponse(response_data)
 
