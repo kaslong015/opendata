@@ -15,6 +15,9 @@ class Licenses(models.Model):
     expiry_date =  models.CharField(max_length=255,blank=True,null=True)
     holder=  models.CharField(max_length=255,blank=True,null=True)
     cadastral_unit = models.CharField(max_length=255,blank=True,null=True)
+    minerals = models.CharField(max_length=255,blank=True,null=True)
+    state = models.CharField(max_length=255,blank=True,null=True)
+    lga = models.CharField(max_length=255,blank=True,null=True)
 
     def __str__(self):
         return self.code

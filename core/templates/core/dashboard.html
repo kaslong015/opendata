@@ -158,7 +158,10 @@
                             <th> Status </th>  
                             <th> Name</th>  
                             <th> Expiry date</th> 
-                            <th> Holder </th>  
+                            <th> Holder </th> 
+                            <th> Mineral </th>
+                            <th> State </th>
+                            <th> Lga</th>
                             <th> Core Id</th> 
                             <!-- <th> Date</th>                          -->
                           </tr>
@@ -167,7 +170,7 @@
                         {% for license in licenses %}
                           <tr> 
                             <td>
-                              <a href="{% url 'valid-detail' license.id %}" style="text-decoration: none;">                             
+                              <a href="{% url 'valid-detail' license.code %}" style="text-decoration: none;">                             
                                 <span class="pl-2">{{ license.code}}</span>
                               </a>
                             </td>                            
@@ -178,6 +181,9 @@
                             <td> {{license.name}} </td>  
                             <td> {{license.expiry_date}} </td>  
                             <td> {{license.holder}} </td> 
+                            <td> {{license.minerals}} </td> 
+                            <td> {{license.state}} </td> 
+                            <td> {{license.lga}} </td> 
                             <td> {{license.core_id}} </td> 
                           </tr> 
                         </a> 
@@ -212,6 +218,11 @@
     
     {% cache 600 my_unique_cache_key %}
      {% block chat%}
+     <script>
+      let detailUrlPrefixs = "{% url 'valid-detail' 'PLACEHOLDER' %}".replace('PLACEHOLDER', '');
+      let detailUrlPrefix = detailUrlPrefixs.slice(0, -1);
+      console.log(detailUrlPrefix)
+    </script>
      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
    
       <script>
@@ -233,19 +244,67 @@
 
           ]
 
-      // Initialize the map
-      const map = L.map('map').setView([8.233333, 6.320833], 8);
+      // // Initialize the map
+      // const map = L.map('map').setView([8.233333, 6.320833], 8);
 
-      // Add a tile layer (OpenStreetMap)
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 18,
-      }).addTo(map);
+      // // Add a tile layer (OpenStreetMap)
+      // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      //     maxZoom: 18,
+      // }).addTo(map);
+
+      const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+  });
+
+  const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/' +
+    'World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles © Esri'
+  });
+
+  const terrain = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+    maxZoom: 17,
+    attribution: '© OpenTopoMap'
+  });
+
+  const dark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19,
+    attribution: '&copy; CartoDB'
+    });
+
+    const topoMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/' +
+    'World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles © Esri'
+    });
+
+    const overlays = {};
+ 
+  // Initialize map with default layer
+  const map = L.map('map', {
+    center: [8.233333, 6.320833],  // Nigeria center
+    zoom: 6,
+    layers: [satellite]  // default
+  });
+
+  // Basemap gallery control
+  const baseMaps = {
+    "OpenStreetMap": osm,
+    "Satellite": satellite,
+    "Terrain": terrain,
+    "Dark Mode (Carto)": dark,
+    "Topo Map (Esri)": topoMap
+  };
+
+
+  // L.control.layers(baseMaps).addTo(map);
+  L.control.layers(baseMaps).addTo(map);
 
       // Fetch the coordinates JSON from Django
       fetch("{% url 'load_coordinates' %}")
           .then(response => response.json())
           .then(data => {
               let colorIndex = 0;
+              console.log(data)
 
               // Iterate over each key in the JSON data
               for (const id in data) {
@@ -265,11 +324,12 @@
                       }).addTo(map);
 
                       // Add a popup to show the ID
-                      polygon.bindPopup(`<b>ID:</b> ${id}`);
+                      polygon.bindPopup(`<a href="${detailUrlPrefix}${id}/">ID: ${id}</a>`);
                   }
               }
           })
           .catch(error => console.error('Error loading JSON:', error));
+   
       </script>
      {% endblock chat%}
      {% endcache %}

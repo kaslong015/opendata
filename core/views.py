@@ -38,20 +38,6 @@ def load_coordinates(request):
 
     return JsonResponse(data_dict)
 
-# Create your views here.
-# @login_required(login_url='login')
-# @cache_page(60 * 30)
-# def dashboard(request):
-#     results = Licenses.objects.all().order_by('id')   
-#     yearly = [int(x.year) for x in YearlyCount.objects.all()]
-#     total_yearly_count = [int(x.total) for x in YearlyCount.objects.all()]
-#     # print(total_yearly_count)
-#     context = {        
-#         'licenses':results,        
-#         'years':yearly,
-#         'total_count':total_yearly_count
-#     }
-#     return render(request,'core/dashboard.html',context)
 
 @method_decorator(cache_page(60 * 30), name='dispatch')
 class DashboardView(LoginRequiredMixin, ListView):
@@ -176,6 +162,10 @@ class ValidDetailView(DetailView,LoginRequiredMixin):
     template_name = 'core/details/detail.html'
     context_object_name = 'license'
 
+    # Instead of pk, use a unique field like 'license_number'
+    slug_field = 'code'  # The model field to filter with
+    slug_url_kwarg = 'code'  # The URL parameter name
+
     def get_context_data(self, **kwargs):
         # Get the default context data from the parent class
         context = super().get_context_data(**kwargs)
@@ -183,7 +173,7 @@ class ValidDetailView(DetailView,LoginRequiredMixin):
         # Get all coordinates with code and return them as context in the view
         latLog = Coordinates.objects.filter(code=context['license'])
         
-        #adding contetx name to the context object  
+        #adding context name to the context object  
         context['cords'] = latLog  
         
         # You can add more context as needed

@@ -1,81 +1,157 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nigerian Map - OpenStreetMap</title>
-    <!-- Leaflet.js CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <style>
-        #map {
-            height: 100vh;
-            width: 100%;
-        }
-    </style>
+  <title>Africa Geoportal + Django Coordinates</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css" />
+  <style>
+    html, body, #esriMap {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+  <script src="https://js.arcgis.com/4.29/"></script>
 </head>
 <body>
-    <h1>Map of Nigeria</h1>
-    <div id="map"></div>
+ 
+ <!-- Coordinate Search Box -->
+<div style="margin-bottom: 10px;">
+  <input type="number" id="lat" placeholder="Latitude" step="0.0001">
+  <input type="number" id="lng" placeholder="Longitude" step="0.0001">
+  <button onclick="searchByCoordinates()">Search</button>
+</div>
 
-    <!-- Leaflet.js JavaScript -->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-      // Define green color palette (you can adjust shades of green as needed)
-    const greenColors = 
-    [
-    '#28a745', 
-    '#4CAF50', 
-    '#388E3C', 
-    '#8BC34A',
-    '#4CAF50',
-    "#FF0000", 
-    "#FF6347",  
-    "#FF4500", 
-    "#DC143C",   
-    "#B22222",    
-    "#8B0000",    
-    "#FF7F7F", 
-    "#FA8072", 
+<!-- ESRI Map Container -->
+<!-- <div id="esriMap" style="height: 600px;"></div> -->
+<div id="esriMap"></div>
+<script>
+  const polygons = []; // Will store polygon geometries with ID
+  let view;            // Global MapView
 
-    ]
+  require([
+    "esri/WebMap",
+    "esri/views/MapView",
+    "esri/Graphic",
+    "esri/layers/GraphicsLayer",
+    "esri/geometry/geometryEngine",
+    "esri/geometry/Point"
+  ], function(WebMap, MapView, Graphic, GraphicsLayer, geometryEngine, Point) {
 
-// Initialize the map
-const map = L.map('map').setView([8.233333, 6.320833], 8);
+    const webmap = new WebMap({
+      portalItem: {
+        id: "86ed11bd00ab4a8c9de6263afe0cd4ed"
+      }
+    });
 
-// Add a tile layer (OpenStreetMap)
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18,
-}).addTo(map);
+    view = new MapView({
+      container: "esriMap",
+      map: webmap,
+      center: [9.560139, 10.891986],
+      zoom: 6
+    });
 
-// Fetch the coordinates JSON from Django
-fetch("{% url 'load_coordinates' %}")
-    .then(response => response.json())
-    .then(data => {
+    const graphicsLayer = new GraphicsLayer();
+    webmap.add(graphicsLayer);
+
+    const greenColors = [
+      '#28a745', '#4CAF50', '#388E3C', '#8BC34A', '#4CAF50',
+      "#FF0000", "#FF6347", "#FF4500", "#DC143C", "#B22222",
+      "#8B0000", "#FF7F7F", "#FA8072"
+    ];
+
+    fetch("{% url 'load_coordinates' %}")
+      .then(response => response.json())
+      .then(data => {
         let colorIndex = 0;
 
-        // Iterate over each key in the JSON data
         for (const id in data) {
-            if (data.hasOwnProperty(id)) {
-                // Get the array of coordinate objects
-                const coordinates = data[id].map(point => [point.lat, point.lng]);
+          if (data.hasOwnProperty(id)) {
+            const rings = data[id].map(pt => [pt.lng, pt.lat]);
 
-                // Select a green color from the palette and cycle through it
-                const color = greenColors[colorIndex % greenColors.length];
-                colorIndex++;
+            const polygon = {
+              type: "polygon",
+              rings: [rings],
+              spatialReference: { wkid: 4326 }
+            };
 
-                // Create a polygon with the selected green color
-                const polygon = L.polygon(coordinates, {
-                    color: color,  // Outline color
-                    fillColor: color,  // Fill color
-                    fillOpacity: 0.5
-                }).addTo(map);
+            const color = greenColors[colorIndex % greenColors.length];
+            colorIndex++;
 
-                // Add a popup to show the ID
-                polygon.bindPopup(`<b>ID:</b> ${id}`);
-            }
+            const graphic = new Graphic({
+              geometry: polygon,
+              symbol: {
+                type: "simple-fill",
+                color: color + "88",
+                outline: {
+                  color: color,
+                  width: 1
+                }
+              },
+              attributes: { id: id },
+              popupTemplate: {
+                title: "Polygon ID: {id}"
+              }
+            });
+
+            polygons.push({ id: id, geometry: graphic.geometry });
+            graphicsLayer.add(graphic);
+          }
         }
-    })
-    .catch(error => console.error('Error loading JSON:', error));
-    </script>
+      })
+      .catch(error => console.error("Polygon load error:", error));
+
+    window.searchByCoordinates = function () {
+      const lat = parseFloat(document.getElementById("lat").value);
+      const lng = parseFloat(document.getElementById("lng").value);
+
+      if (isNaN(lat) || isNaN(lng)) {
+        alert("Please enter valid coordinates.");
+        return;
+      }
+
+      const point = new Point({
+        latitude: lat,
+        longitude: lng
+      });
+
+      // Check which polygon contains the point
+      let found = false;
+      for (const poly of polygons) {
+        if (geometryEngine.contains(poly.geometry, point)) {
+          found = true;
+
+          view.popup.open({
+            title: "Found in Polygon",
+            content: "ID: " + poly.id,
+            location: point
+          });
+
+          view.goTo({ center: [lng, lat], zoom: 12 });
+          break;
+        }
+      }
+
+      if (!found) {
+        view.popup.open({
+          title: "No polygon found",
+          content: `Point (${lat}, ${lng}) is not inside any polygon.`,
+          location: point
+        });
+
+        view.goTo({ center: [lng, lat], zoom: 12 });
+      }
+    }
+  });
+</script>
+
 </body>
 </html>
+
+
+
+
+
